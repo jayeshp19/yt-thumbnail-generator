@@ -1,121 +1,58 @@
-let selectedTextContainer = null;
+document.addEventListener('DOMContentLoaded', () => {
+    const workspace = document.getElementById('workspace');
+    const backgroundInput = document.getElementById('backgroundInput');
+    const textSizeRange = document.getElementById('textSizeRange');
+    const deleteTextBtn = document.getElementById('deleteTextBtn');
+    let selectedTextElement = null;
 
-document.getElementById('workspace').addEventListener('click', function(event) {
-    if (event.target === this) {
+    // Change workspace background
+    backgroundInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = e => workspace.style.backgroundImage = `url(${e.target.result})`;
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+
+    // Add text to workspace
+    workspace.addEventListener('click', () => {
         const text = prompt('Enter text:');
-        if (text) addText(text);
-    }
-});
+        if (text) {
+            const textElement = document.createElement('div');
+            textElement.textContent = text;
+            textElement.style.position = 'absolute';
+            textElement.style.left = '50%';
+            textElement.style.top = '50%';
+            textElement.style.transform = 'translate(-50%, -50%)';
+            textElement.contentEditable = true;
+            textElement.style.minWidth = '20px';
+            textElement.style.outline = 'none';
+            workspace.appendChild(textElement);
 
-function addText(text) {
-    const textColorInput = document.getElementById('textColorInput').value;
-    const textSizeInput = document.getElementById('textSizeInput').value;
-
-    const textContainer = document.createElement('div');
-    textContainer.classList.add('text-container');
-    textContainer.style.position = 'absolute';
-    textContainer.style.left = '50px'; // Default position, adjust as needed
-    textContainer.style.top = '50px';
-    textContainer.style.cursor = 'move';
-    textContainer.style.color = textColorInput;
-    textContainer.style.fontSize = textSizeInput + 'px';
-
-    const textNode = document.createElement('div');
-    textNode.classList.add('text');
-    textNode.contentEditable = true;
-    textNode.innerText = text;
-    textContainer.appendChild(textNode);
-
-    document.getElementById('workspace').appendChild(textContainer);
-
-    makeDraggable(textContainer, document.getElementById('workspace'));
-
-    textContainer.onclick = function() {
-        selectedTextContainer = this;
-        document.getElementById('textResizeControls').style.display = 'block';
-        document.getElementById('textSizeRange').value = parseInt(this.style.fontSize);
-    };
-}
-
-// Image Handling
-function addImage() {
-    var imageInput = document.getElementById('imageInput');
-    if (imageInput.files && imageInput.files[0]) {
-        var imageNode = document.createElement('img');
-        imageNode.src = URL.createObjectURL(imageInput.files[0]);
-        imageNode.onload = function() {
-            URL.revokeObjectURL(this.src);
-        };
-        imageNode.style.width = '100%';
-        imageNode.style.height = 'auto';
-        document.getElementById('workspace').appendChild(imageNode);
-    }
-}
-
-
-function makeDraggable(element, boundary) {
-    let initialX, initialY, mousePressX, mousePressY;
-
-    element.addEventListener('mousedown', function(event) {
-        event.preventDefault();
-        mousePressX = event.clientX;
-        mousePressY = event.clientY;
-        initialX = element.offsetLeft;
-        initialY = element.offsetTop;
-
-        function onMouseMove(event) {
-            const dx = event.clientX - mousePressX;
-            const dy = event.clientY - mousePressY;
-            const newX = initialX + dx;
-            const newY = initialY + dy;
-
-            // Restrict movement within the boundary
-            const rect = boundary.getBoundingClientRect();
-            if (newX >= 0 && newX + element.offsetWidth <= rect.width) {
-                element.style.left = newX + 'px';
-            }
-            if (newY >= 0 && newY + element.offsetHeight <= rect.height) {
-                element.style.top = newY + 'px';
-            }
+            textElement.addEventListener('click', (e) => {
+                e.stopPropagation();
+                selectedTextElement = textElement;
+                textSizeRange.style.display = 'block';
+                deleteTextBtn.style.display = 'inline-block';
+                // Highlight selected text element if needed
+            });
         }
-
-        function onMouseUp() {
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
-        }
-
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
     });
 
-    element.ondragstart = () => false;
-}
-
-document.getElementById('textSizeRange').addEventListener('input', function() {
-    if (selectedTextContainer) {
-        selectedTextContainer.style.fontSize = this.value + 'px';
-    }
-});
-
-function deleteText() {
-    if (selectedTextContainer) {
-        selectedTextContainer.remove();
-        selectedTextContainer = null;
-        document.getElementById('textResizeControls').style.display = 'none';
-    }
-}
-
-// Generating the Thumbnail
-function generateThumbnail() {
-    var workspace = document.getElementById('workspace');
-    var generateBtn = document.getElementById('generateBtn');
-    generateBtn.innerText = 'Generating...';
-    html2canvas(workspace).then(function(canvas) {
-        var img = canvas.toDataURL("image/png");
-        var link = document.createElement('a');
-        link.href = img;
-        link.download = 'thumbnail.png';
-        link.click();
-        generateBtn.innerText = 'Generate Thumbnail';
+    // Resize selected text
+    textSizeRange.addEventListener('input', () => {
+        if (selectedTextElement) {
+            selectedTextElement.style.fontSize = `${textSizeRange.value}px`;
+        }
     });
-}
+
+    // Delete selected text
+    deleteTextBtn.addEventListener('click', () => {
+        if (selectedTextElement) {
+            workspace.removeChild(selectedTextElement);
+            textSizeRange.style.display = 'none';
+            deleteTextBtn.style.display = 'none';
+            selectedTextElement = null;
+        }
+    });
+});

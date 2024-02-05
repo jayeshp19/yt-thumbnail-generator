@@ -1,5 +1,3 @@
-
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,25 +6,12 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="workspace" onclick="workspaceClicked(event)">
-        <!-- The image and texts will be added here -->
+    <div id="workspace">
+        <!-- Default background set via CSS; user-added elements will go here -->
     </div>
-    <div id="toolbar">
-        <input type="color" id="textColorInput" value="#000000">
-        <select id="textSizeInput">
-            <option value="16">Small</option>
-            <option value="24">Medium</option>
-            <option value="32">Large</option>
-            <option value="40">Extra Large</option>
-        </select>
-        <input type="file" id="imageInput" accept="image/*" onchange="addImage()">
-        <button id="generateBtn" onclick="generateThumbnail()">Generate Thumbnail</button>
-    </div>
-    <div id="textResizeControls" style="display:none;">
-        <input type="range" id="textSizeRange" min="10" max="100" onchange="resizeText()">
-        <button onclick="deleteText()">Delete Text</button>
-    </div>
+    <input type="file" id="backgroundInput" accept="image/*">
+    <input type="range" id="textSizeRange" min="10" max="100" style="display:none;">
+    <button id="deleteTextBtn" style="display:none;">Delete Text</button>
     <script src="script.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.3/html2canvas.min.js"></script>
 </body>
 </html>

@@ -1,3 +1,10 @@
+:root {
+    --text-color: #000;
+    --background-color: #fff;
+    --button-hover-bg: #f0f0f0;
+    --border-color: #ccc;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -9,49 +16,43 @@ body {
 
 #workspace {
     position: relative;
-    width: 100%;
-    max-width: 640px;
+    width: 640px; /* Example size; adjust as needed */
     height: 360px;
-    margin: 20px 0;
-    background: url('background.jpg') no-repeat center center;
+    margin: 20px auto;
+    background: url('yt-thumbnail-bg.png') no-repeat center center;
     background-size: cover;
-    border: 2px solid #ddd;
     cursor: pointer;
 }
 
-#toolbar {
+#toolbar, #textResizeControls {
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-bottom: 20px;
 }
 
-#textResizeControls {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-input[type="range"] {
-    width: 200px;
-}
-
-input[type="file"] {
-    border: 1px solid #ccc;
+input[type="range"], input[type="file"], button {
     padding: 5px;
-}
-
-button {
-    padding: 5px 10px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #f0f0f0;
+    background-color: var(--button-hover-bg);
 }
 
 @media (max-width: 600px) {
     #toolbar, #textResizeControls {
         flex-direction: column;
     }
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }
