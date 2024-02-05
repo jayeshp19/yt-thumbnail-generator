@@ -1,52 +1,75 @@
 :root {
-      --text-color: #000;
-      --background-color: #fff;
-      --button-hover-bg: #f0f0f0;
-      --border-color: #ccc;
-    }
-    
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin: 0;
-      font-family: Arial, sans-serif;
-    }
-    
+    --text-color: #fff;
+    --background-color: #fff;
+    --button-hover-bg: #f0f0f0;
+    --border-color: #ccc;
+    --button-active-bg: #e0e0e0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+#workspace {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    height: 360px;
+    margin: 20px auto;
+    background: url('yt-thumbnail-bg.png') center center / cover no-repeat;
+    cursor: pointer;
+}
+
+button, input[type="file"], input[type="range"] {
+    padding: 10px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+button:hover, input[type="file"]:hover, input[type="range"]:hover {
+    background-color: var(--button-hover-bg);
+}
+
+button:active, input[type="file"]:active, input[type="range"]:active {
+    background-color: var(--button-active-bg);
+}
+
+.hidden {
+    display: none;
+}
+
+#controller {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+}
+
+#stick {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--border-color);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media (max-width: 768px) {
     #workspace {
-      position: relative;
-      width: 640px; 
-      height: 360px;
-      margin: 20px auto;
-      background: url('yt-thumbnail-bg.png') no-repeat center center;
-      background-size: cover;
-      cursor: pointer;
+        height: 240px;
     }
-    
-    #toolbar, #textResizeControls {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    
-    input[type="range"], input[type="file"], button {
-      padding: 5px;
-      cursor: pointer;
-    }
-    
-    button:hover {
-      background-color: var(--button-hover-bg);
-    }
-    
-    .hidden {
-      display: none;
-    }
-    
-    @media (max-width: 600px) {
-      #toolbar, #textResizeControls {
+}
+
+@media (max-width: 480px) {
+    #controls {
         flex-direction: column;
-      }
     }
-    
+}

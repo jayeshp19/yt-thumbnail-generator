@@ -1,21 +1,34 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube Thumbnail Generator</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Thumbnail Generator</title>
+    <link href="styles.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js" defer></script>
 </head>
 <body>
-  <main>
-    <div id="workspace">
-      <!-- Default background set via CSS; user-added elements will go here -->
-    </div>
-  </main>
-  <form>
-    <input type="file" id="backgroundInput" accept="image/*">
-    <input type="range" id="textSizeRange" min="10" max="100" class="hidden">
-    <button id="deleteTextBtn" class="hidden">Delete Text</button>
-  </form>
-  <script src="script.js"></script>
+    <main>
+        <section id="workspace-container">
+            <div id="workspace" aria-label="Thumbnail workspace"></div>
+        </section>
+        <section id="controls">
+            <form id="textForm" aria-label="Add text to thumbnail">
+                <label for="textInput">Text:</label>
+                <input id="textInput" aria-required="true">
+                <button id="addTextBtn" type="button">Add Text</button>
+            </form>
+            <div id="textList" aria-label="List of added texts"></div>
+            <div id="controller" class="hidden" aria-label="Text position controller">
+                <div id="stick"></div>
+            </div>
+            <label for="colorPicker">Text Color:</label>
+            <input id="colorPicker" class="jscolor" value="FFFFFF" aria-label="Choose text color">
+            <label for="backgroundInput">Background Image:</label>
+            <input id="backgroundInput" type="file" accept="image/*" aria-label="Upload background image">
+            <input id="textSizeRange" class="hidden" type="range" min="10" max="100" aria-label="Text size">
+        </section>
+    </main>
+    <script src="script.js"></script>
 </body>
 </html>
