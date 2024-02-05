@@ -11,32 +11,45 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentTextElement = null;
     let joystickCenter = { x: 0, y: 0 };
 
+    window.addEventListener("resize", setupJoystick);
+
     function setupJoystick() {
-        const rect = controller.getBoundingClientRect();
-        joystickCenter = {
-            x: rect.left + rect.width / 2,
-            y: rect.top + rect.height / 2
-        };
-        stick.style.transform = "translate(-50%, -50%)";
+        if (!controller.classList.contains("hidden")) {
+            const rect = controller.getBoundingClientRect();
+            joystickCenter = {
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2
+            };
+            stick.style.transform = "translate(-50%, -50%)";
+        }
     }
 
     function moveTextElement(dx, dy) {
         if (!currentTextElement) return;
     
+        const sensitivity = 0.05; // Adjust sensitivity as needed
+        dx *= sensitivity;
+        dy *= sensitivity;
+    
         const workspaceRect = workspace.getBoundingClientRect();
         const textRect = currentTextElement.getBoundingClientRect();
     
-        // Calculate the new position as a percentage of the workspace dimensions
-        let newLeft = ((textRect.left - workspaceRect.left + dx) / workspaceRect.width) * 100;
-        let newTop = ((textRect.top - workspaceRect.top + dy) / workspaceRect.height) * 100;
+        // Convert current left and top from % to pixels for calculation
+        let currentLeft = parseFloat(currentTextElement.style.left || '50%') * workspaceRect.width / 100;
+        let currentTop = parseFloat(currentTextElement.style.top || '50%') * workspaceRect.height / 100;
     
-        // Calculate the text element's width and height as percentages
-        const textWidthPercent = (textRect.width / workspaceRect.width) * 100;
-        const textHeightPercent = (textRect.height / workspaceRect.height) * 100;
+        // Calculate the new position in pixels
+        let newLeft = currentLeft + dx;
+        let newTop = currentTop + dy;
+    
+        // Convert the new position back to % to maintain responsiveness
+        newLeft = (newLeft / workspaceRect.width) * 100;
+        newTop = (newTop / workspaceRect.height) * 100;
     
         // Ensure the new position keeps the text element within the workspace boundaries
-        newLeft = Math.max(0, Math.min(100 - textWidthPercent, newLeft));
-        newTop = Math.max(0, Math.min(100 - textHeightPercent, newTop));
+        // Adjust these calculations if your text element's anchor point isn't in the top-left corner
+        newLeft = Math.max(0, Math.min(100, newLeft));
+        newTop = Math.max(0, Math.min(100, newTop));
     
         currentTextElement.style.left = `${newLeft}%`;
         currentTextElement.style.top = `${newTop}%`;
@@ -121,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
             textSizeRange.classList.remove("hidden");
             colorPicker.classList.remove("hidden");
             controller.classList.remove("hidden");
-            setupJoystick();
+            setupJoystick(); // Ensure joystick is correctly positioned when a text element is selected
         });
     }
 
