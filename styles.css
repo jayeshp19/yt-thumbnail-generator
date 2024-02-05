@@ -1,58 +1,52 @@
 :root {
-    --text-color: #000;
-    --background-color: #fff;
-    --button-hover-bg: #f0f0f0;
-    --border-color: #ccc;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
-
-#workspace {
-    position: relative;
-    width: 640px; /* Example size; adjust as needed */
-    height: 360px;
-    margin: 20px auto;
-    background: url('yt-thumbnail-bg.png') no-repeat center center;
-    background-size: cover;
-    cursor: pointer;
-}
-
-#toolbar, #textResizeControls {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-input[type="range"], input[type="file"], button {
-    padding: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: var(--button-hover-bg);
-}
-
-@media (max-width: 600px) {
-    #toolbar, #textResizeControls {
-        flex-direction: column;
+      --text-color: #000;
+      --background-color: #fff;
+      --button-hover-bg: #f0f0f0;
+      --border-color: #ccc;
     }
-}
-
-.visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-}
+    
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    
+    #workspace {
+      position: relative;
+      width: 640px; 
+      height: 360px;
+      margin: 20px auto;
+      background: url('yt-thumbnail-bg.png') no-repeat center center;
+      background-size: cover;
+      cursor: pointer;
+    }
+    
+    #toolbar, #textResizeControls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    input[type="range"], input[type="file"], button {
+      padding: 5px;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: var(--button-hover-bg);
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    @media (max-width: 600px) {
+      #toolbar, #textResizeControls {
+        flex-direction: column;
+      }
+    }
+    

@@ -1,17 +1,21 @@
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Thumbnail Generator</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Thumbnail Generator</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <main>
     <div id="workspace">
-        <!-- Default background set via CSS; user-added elements will go here -->
+      <!-- Default background set via CSS; user-added elements will go here -->
     </div>
+  </main>
+  <form>
     <input type="file" id="backgroundInput" accept="image/*">
-    <input type="range" id="textSizeRange" min="10" max="100" style="display:none;">
-    <button id="deleteTextBtn" style="display:none;">Delete Text</button>
-    <script src="script.js"></script>
+    <input type="range" id="textSizeRange" min="10" max="100" class="hidden">
+    <button id="deleteTextBtn" class="hidden">Delete Text</button>
+  </form>
+  <script src="script.js"></script>
 </body>
 </html>
