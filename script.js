@@ -27,27 +27,19 @@ document.addEventListener("DOMContentLoaded", () => {
     function moveTextElement(dx, dy) {
         if (!currentTextElement) return;
     
-        const sensitivity = 0.05; // Adjust sensitivity as needed
+        const sensitivity = 0.05;
         dx *= sensitivity;
         dy *= sensitivity;
     
         const workspaceRect = workspace.getBoundingClientRect();
-        const textRect = currentTextElement.getBoundingClientRect();
-    
-        // Convert current left and top from % to pixels for calculation
+
         let currentLeft = parseFloat(currentTextElement.style.left || '50%') * workspaceRect.width / 100;
         let currentTop = parseFloat(currentTextElement.style.top || '50%') * workspaceRect.height / 100;
     
-        // Calculate the new position in pixels
         let newLeft = currentLeft + dx;
         let newTop = currentTop + dy;
-    
-        // Convert the new position back to % to maintain responsiveness
         newLeft = (newLeft / workspaceRect.width) * 100;
         newTop = (newTop / workspaceRect.height) * 100;
-    
-        // Ensure the new position keeps the text element within the workspace boundaries
-        // Adjust these calculations if your text element's anchor point isn't in the top-left corner
         newLeft = Math.max(0, Math.min(100, newLeft));
         newTop = Math.max(0, Math.min(100, newTop));
     
@@ -129,12 +121,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 currentTextElement.style.border = "none";
             }
             currentTextElement = element;
-            element.style.border = "2px solid red";
+            currentTextElement.style.border = "2px solid red";
             textSizeRange.value = parseInt(window.getComputedStyle(currentTextElement).fontSize);
             textSizeRange.classList.remove("hidden");
             colorPicker.classList.remove("hidden");
             controller.classList.remove("hidden");
-            setupJoystick(); // Ensure joystick is correctly positioned when a text element is selected
+            setupJoystick();
         });
     }
 
@@ -145,10 +137,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     colorPicker.addEventListener("change", function() {
-        if (currentTextElement) {
+                if (currentTextElement) {
             currentTextElement.style.color = "#" + this.value;
         }
-    });
+    }, false);
 
     controller.addEventListener("mousedown", activateJoystick);
     controller.addEventListener("touchstart", activateJoystick, { passive: false });
