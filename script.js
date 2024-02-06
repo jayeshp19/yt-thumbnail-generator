@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
         element.style.left = "50%";
         element.style.top = "50%";
         element.style.transform = "translate(-50%, -50%)";
-        element.style.color = "#" + colorPicker.value;
+        element.style.color = colorPicker.value ?? ("#" + colorPicker.value);
         element.contentEditable = true;
         element.style.minWidth = "20px";
         element.style.outline = "none";
@@ -136,9 +136,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    colorPicker.addEventListener("change", function() {
+    colorPicker.addEventListener("input", function() {
                 if (currentTextElement) {
-            currentTextElement.style.color = "#" + this.value;
+                    console.log(this.value)
+            currentTextElement.style.color =  this.value;
         }
     }, false);
 
